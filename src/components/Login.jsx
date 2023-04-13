@@ -4,6 +4,7 @@ import bg from '../images/loginbg.png'
 import { useState } from 'react'
 import axios from 'axios'
 const Login = ({setToken}) => {
+    document.title = "Login"
     const baseURL = process.env.REACT_APP_API
     const [credentials, setCredentials] = useState({
         username: '',
@@ -17,8 +18,8 @@ const Login = ({setToken}) => {
         setCredentials({ ...credentials, [name]: value })
     }
 
-    const login = async(e) => {
-        e.preventDefault()
+    const login = async() => {
+       
         if (!credentials.username) {
             setError("Username field must not be empty.")
             return
@@ -37,6 +38,12 @@ const Login = ({setToken}) => {
         setToken(token)
         sessionStorage.setItem("token", token)
     }
+
+    const handleLogin = (e) =>{
+        e.preventDefault()
+    }
+
+
     return (
         <>
             <div className="fixed -z-10 bg-red-50 w-full h-full">
@@ -49,7 +56,7 @@ const Login = ({setToken}) => {
                         className="mx-auto my-40 h-auto w-auto" /></div>
                     {/* <!-- login form --> */}
                     <div className="h-[620px] w-[550px] bg-white">
-                        <form className="mx-28 mt-20">
+                        <form onSubmit={handleLogin} className="mx-28 mt-20">
                             <h1 className="mb-20 text-left text-5xl font-bold select-none">Sign In</h1>
                             <div className="space-y-10">
                                 <div className="flex border-b border-black">

@@ -1,5 +1,5 @@
-import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { Routes, Route,  useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/header";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -12,23 +12,54 @@ import StockLogs from "./components/StockLogs/StockLogs";
 import Report from "./components/Report/Report";
 import Login from "./components/Login";
 import StockReport from "./components/Report/StockReport";
+import axios from "axios";
 
-const getToken = () =>{
-   return sessionStorage.getItem("token") || null
+const getToken = () => {
+  return sessionStorage.getItem("token") || null
 }
 
 function App() {
+  const baseURL = process.env.REACT_APP_API
+  const navigate = useNavigate()
   const [active, setActive] = useState('')
   const [token, setToken] = useState(getToken())
-  
-  if(!token){
+  const [details, setDetails] = useState(null)
+
+  useEffect(() => {
+    const SetAccess = async () => {
+      if (token) {
+        let details = await axios.get(`${baseURL}/auth/admin/detail?token=${token}`)
+        details = details.data
+        setDetails(details)
+        redirect(details)
+      }
+    }
+
+    const redirect = (details) => {
+      if(details){
+        if (details.adminType === 'custodian') {
+          navigate('/dashboard')
+        }
+        else {
+          navigate('/logs/requisition')
+        }
+      }
+    }
+
+    SetAccess()
+  }, [baseURL, token]);
+
+
+  if (!token) {
     return <Login setToken={setToken} />
   }
+
+  
 
   return (
     <>
       <div className="flex">
-        <Sidebar active={active} />
+        <Sidebar active={active} details={details} />
         <div className="block w-full bg-blue-50 relative">
           <Header />
           <Routes>

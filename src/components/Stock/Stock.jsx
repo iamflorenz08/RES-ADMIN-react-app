@@ -8,6 +8,7 @@ import Filter from "../Filter"
 import toast, { Toaster } from "react-hot-toast"
 
 const Stock = ({ setActive }) => {
+    document.title = "Stock"
     const baseURL = process.env.REACT_APP_API
     const [filterType, setFilterType] = useState(null)
     const [addEditModal, setAddEditModal] = useState(false)
@@ -42,8 +43,9 @@ const Stock = ({ setActive }) => {
             const item_type = filterType && filterType.item_type && '&item_type=' + filterType.item_type
             const category =  filterType && filterType.category && '&category=' + filterType.category 
             const sort_by =   filterType && filterType.sort_by && '&sort_by=' + filterType.sort_by 
-            const stocks = await axios.get(`${baseURL}/supply/details/${page}/${row_limit}?${item_type || ''}${category || ''}${sort_by || ''}`)
-            const stock_count = await axios.get(`${baseURL}/supply/count?${item_type || ''}${category || ''}${sort_by || ''}`)
+            const search =   filterType && filterType.search && '&search=' + filterType.search 
+            const stocks = await axios.get(`${baseURL}/supply/details/${page}/${row_limit}?${item_type || ''}${category || ''}${sort_by || ''}${search || ''}`)
+            const stock_count = await axios.get(`${baseURL}/supply/count?${item_type || ''}${category || ''}${sort_by || ''}${search || ''}`)
             const pageLimit = Math.ceil(stock_count.data.stock_count / row_limit)
             const rowStart = stocks.data.length > 0 ? ((page - 1) * row_limit) + 1 : 0
             const rowEnd = page >= pageLimit ? stock_count.data.stock_count : (rowStart + row_limit) - 1
@@ -113,6 +115,11 @@ const Stock = ({ setActive }) => {
         if (page <= 1) return
         setPage(page => page - 1)
     }
+
+    const search = (e) => {
+        e.preventDefault()
+        setFilterType(state => ({...state, search: e.target[0].value}))
+    }
     return (
         <>
             <Loading loading={loading} />
@@ -131,6 +138,14 @@ const Stock = ({ setActive }) => {
                                             d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.598.598 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.659z" />
                                     </svg>
                                     <h2 className="font-bold">Stocks</h2>
+                                    <form onSubmit={search} className="ml-10 flex items-center">
+                                        <label htmlFor="default-search"
+                                            className="sr-only text-sm font-medium text-gray-900">Search</label>
+                                        <input
+                                            type="search" id="default-search"
+                                            className="h-8 w-[250px] rounded-full border border-gray-500 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none"
+                                            placeholder="Search..." />
+                                    </form>
                                     <Filter type={'stock'} filterType={filterType} setFilterType={setFilterType} />
                                 </div>
 

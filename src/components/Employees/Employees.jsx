@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import EditEmployee from "../Modals/EditEmployee"
 import EmployeeTable from "./EmployeeTable";
 const Employees = ({ setActive }) => {
+    document.title = "Employees"
     const baseURL = process.env.REACT_APP_API
     const [editModal, setEditModal] = useState(false)
     const [employeeInfo, setEmployeeInfo] = useState({})
@@ -67,7 +68,7 @@ const Employees = ({ setActive }) => {
                     <div className="grid grid-cols-1 grid-rows-1 gap-x-0 gap-y-0 overflow-hidden">
                         <div className="box col-start-1 col-end-4 row-start-1">
                             <div>
-                                <div className="x-4 flex justify-between border-b-2 border-black bg-white shadow-lg">
+                                <div className="x-4 flex justify-start border-b-2 border-black bg-white shadow-lg">
                                     <div className="flex items-center">
                                         <svg className="mx-2 h-10 w-10 rounded p-2 bi bi-people-fill" xmlns="http://www.w3.org/2000/svg"
                                             width="16" height="16" fill="currentColor"
@@ -78,6 +79,14 @@ const Employees = ({ setActive }) => {
 
                                         <h2 className="font-bold">Employees</h2>
                                     </div>
+                                    <form  className="ml-10 flex items-center">
+                                        <label htmlFor="default-search"
+                                            className="sr-only text-sm font-medium text-gray-900">Search</label>
+                                        <input
+                                            type="search" id="default-search"
+                                            className="h-8 w-[250px] rounded-full border border-gray-500 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none"
+                                            placeholder="Search..." />
+                                    </form>
                                 </div>
 
                                 {/* <!-- table --> */}

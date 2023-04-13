@@ -111,8 +111,6 @@ const AddRequestModal = ({ show, toggleModal, showToast }) => {
         );
     }
 
-    console.log(requests)
-
     const userHandleChange = (e) => {
         const name = e.target.name
         const value = e.target.value

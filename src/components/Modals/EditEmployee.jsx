@@ -9,6 +9,7 @@ const EditEmployee = ({ show, toggleModal, employee, setEmployeeInfo,save }) => 
         }
         setEmployeeInfo({ ...employee, [e.target.name]: value })
     }
+    console.log(employee)
     return (
         <>
             {show && (
@@ -132,7 +133,7 @@ const EditEmployee = ({ show, toggleModal, employee, setEmployeeInfo,save }) => 
                                             </div>
                                         </div>
                                         <div className="my-4">
-                                            <div className="ml-10 flex items-baseline justify-center bi bi-image-fill">
+                                            {/* <div className="ml-10 flex items-baseline justify-center bi bi-image-fill">
                                                 <div className="flex items-baseline justify-center">
                                                     <svg className="h-auto w-56"
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +153,7 @@ const EditEmployee = ({ show, toggleModal, employee, setEmployeeInfo,save }) => 
                                                         </svg>
                                                     </a>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
 
@@ -167,7 +168,7 @@ const EditEmployee = ({ show, toggleModal, employee, setEmployeeInfo,save }) => 
                                                 className="mr-2 rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-900 focus:outline-none focus:ring-4 focus:ring-green-600">
                                                 Save
                                             </button>
-                                            <button data-modal-toggle="employ-edit" type="button"
+                                            <button onClick={toggleModal} type="button"
                                                 className="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-600">
                                                 Cancel
                                             </button>

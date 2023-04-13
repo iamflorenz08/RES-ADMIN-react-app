@@ -8,6 +8,7 @@ import Loading from "../Loading";
 import toast, { Toaster } from "react-hot-toast"
 
 const Requisition = ({ setActive }) => {
+    document.title = "Requisition"
     const [modal, setToggleModal] = useState(false)
     const [modalAdd, setToggleModalAdd] = useState(false)
     const [modalDetails, setModalDetails] = useState('')
@@ -28,8 +29,9 @@ const Requisition = ({ setActive }) => {
             const date = filterType && filterType.date && "&date=" + filterType.date
             const status = filterType && filterType.status && "&status=" + filterType.status
             const sort_by = filterType && filterType.sort_by && "&sort_by=" + filterType.sort_by
-            const requisitions = await axios.get(`${baseURL}/requisition/page/${current_page}/${row_limit}?type=requisition${date || ''}${status || ''}${sort_by || ''}`)
-            const total_request = await axios.get(`${baseURL}/requisition/count?type=requisition${date || ''}${status || ''}${sort_by || ''}`)
+            const search = filterType && filterType.search && "&search=" + filterType.search
+            const requisitions = await axios.get(`${baseURL}/requisition/page/${current_page}/${row_limit}?type=requisition${date || ''}${status || ''}${sort_by || ''}${search || ''}`)
+            const total_request = await axios.get(`${baseURL}/requisition/count?type=requisition${date || ''}${status || ''}${sort_by || ''}${search || ''}`)
             setRequisitions(requisitions.data)
             setTotalRequest(total_request.data.count)
             const limit = Math.ceil(total_request.data.count / row_limit)
@@ -74,6 +76,11 @@ const Requisition = ({ setActive }) => {
         setToggleModal(true)
     }
 
+    const search = (e) => {
+        e.preventDefault()
+        setFilterType(state=> ({...state, search: e.target[0].value}))
+        
+    }
     return (
         <>
             <Loading loading={loading} />
@@ -92,12 +99,13 @@ const Requisition = ({ setActive }) => {
                                     </svg>
 
                                     <h2 className="font-bold">Requisition</h2>
-                                    <form className="ml-10 flex items-center">
+                                    <form onSubmit={search} className="ml-10 flex items-center">
                                         <label htmlFor="default-search"
                                             className="sr-only text-sm font-medium text-gray-900">Search</label>
-                                        <input type="search" id="default-search"
+                                        <input
+                                            type="search" id="default-search"
                                             className="h-8 w-[250px] rounded-full border border-gray-500 bg-gray-50 p-2.5 text-sm text-gray-900 outline-none"
-                                            placeholder="Search..." />
+                                            placeholder="Search ID..." />
                                     </form>
                                     <Filter filterType={filterType} setFilterType={setFilterType} type={'requisition'} />
                                 </div>

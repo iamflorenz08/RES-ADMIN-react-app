@@ -12,6 +12,7 @@ import Loading from "../Loading";
 
 
 const Dashboard = ({ setActive }) => {
+    document.title = "Dashboard"
     const baseURL = process.env.REACT_APP_API
     const [requisitions, setRequisitions] = useState(null);
     const [stocks, setStocks] = useState(null);

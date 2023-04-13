@@ -73,21 +73,28 @@ const Report = () => {
                     </div>
 
                     <div className="m-4 flex gap-5 fixed bottom-0 right-0">
-                        <button
-                            className=" shadow-lg px-6 py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-white flex items-center gap-2"
-                            onClick={handleRISPrint}>
-                            <IoPrintSharp /> RIS
-                        </button>
-                        <button
-                            className=" shadow-lg px-6 py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-white flex items-center gap-2"
-                            onClick={handleICSPrint}>
-                            <IoPrintSharp /> ICS
-                        </button>
-                        <button
-                            className=" shadow-lg px-6 py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-white flex items-center gap-2"
-                            onClick={handlePARPrint}>
-                            <IoPrintSharp /> PAR
-                        </button>
+                        {ris && ris.length > 0 && (
+                            <button
+                                className=" shadow-lg px-6 py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-white flex items-center gap-2"
+                                onClick={handleRISPrint}>
+                                <IoPrintSharp /> RIS
+                            </button>
+                        )}
+                        {ics && ics.length > 0 && (
+                            <button
+                                className=" shadow-lg px-6 py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-white flex items-center gap-2"
+                                onClick={handleICSPrint}>
+                                <IoPrintSharp /> ICS
+                            </button>
+                        )}
+                        {par && par.length > 0 && (
+                            <button
+                                className=" shadow-lg px-6 py-3 bg-blue-900 hover:bg-blue-800 rounded-lg text-white flex items-center gap-2"
+                                onClick={handlePARPrint}>
+                                <IoPrintSharp /> PAR
+                            </button>
+                        )}
+
                     </div>
                 </>
             )}

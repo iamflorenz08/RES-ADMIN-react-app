@@ -1,18 +1,55 @@
 import AppLogo from '../images/smslogo.png'
-const header = () => {
+import { FaBell } from 'react-icons/fa'
+import { BsThreeDotsVertical, BsExclamationLg } from 'react-icons/bs'
+import { useState } from 'react'
+
+const Header = () => {
+
+    const [notification, toggleNotification] = useState(false)
 
     const logout = () => {
         sessionStorage.clear()
     }
+
     return (
-        <div className="sticky top-0 flex justify-between bg-white shadow-lg h-fit w-full">
+        <div className="sticky top-0 flex justify-between bg-white shadow-lg h-fit w-full p-[10px]">
             <div className="flex items-center">
                 <img src={AppLogo} alt="smslogo.png"
                     className="mx-3 my-1 flex h-8 w-8 items-center justify-center rounded" />
                 <h2 className="font-bold text-blue-900">Supply Management System</h2>
             </div>
 
-            <div className="mx-4">
+            <div className='flex justify-center items-center gap-6'>
+                <div className='relative'>
+
+                    <FaBell size={25} className={(notification && 'text-[#007BFF]') + ' cursor-pointer'} onClick={()=> toggleNotification(state=>!state)}/>
+
+                    {notification && (
+                        <div className='bg-white shadow-md w-[320px] h-[330px] absolute right-0 top-11 rounded-md flex flex-col'>
+                            <div className='p-[11px]'>
+                                <h1 className='font-bold text-[20px]'>Notification</h1>
+                            </div>
+                            <div className='overflow-auto'>
+                                <div className='h-[50px] bg-[#C9E0FE] flex items-center pr-[15px] cursor-pointer'>
+                                    <BsExclamationLg size={25} color='#FBAF35' className='mx-[15px]' />
+                                    <div>
+                                        <p className='text-[12px]'>Item_asdas_1231412 is running low!</p>
+                                        <p className='text-[#8F8F8F] text-[11px]'>1d ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+
+                </div>
+                <div
+                    className='cursor-pointer'>
+                    <BsThreeDotsVertical size={30} />
+                </div>
+            </div>
+
+            {/* <div className="mx-4">
                 <a 
                 onClick={logout}
                 href="/" className="mx-2 flex items-center">
@@ -26,9 +63,9 @@ const header = () => {
                             d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
                     </svg>
                 </a>
-            </div>
+            </div> */}
         </div>
     )
 }
 
-export default header
+export default Header

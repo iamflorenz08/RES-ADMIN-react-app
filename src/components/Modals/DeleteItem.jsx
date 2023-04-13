@@ -1,6 +1,11 @@
 import React from 'react'
 
-const DeleteItem = ({ show, toggleModal, deleteStock}) => {
+const DeleteItem = ({ show, toggleModal, deleteStock, setRefreshKey}) => {
+    const deleteItem = () =>{
+        deleteStock()
+        setRefreshKey(key=>key+1)
+        toggleModal()
+    }
     return (
         <>
             {show && (
@@ -22,7 +27,7 @@ const DeleteItem = ({ show, toggleModal, deleteStock}) => {
                                 <h2 className="font-bold text-black">DELETE ITEM</h2>
                                 <h3 className="mb-5 text-lg font-normal text-gray-700 dark:text-gray-700">
                                     Are you sure you want to delete this item?</h3>
-                                <button onClick={deleteStock} type="button"
+                                <button onClick={deleteItem} type="button"
                                     className="mr-2 inline-flex items-center rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800">
                                     Yes, I'm sure
                                 </button>

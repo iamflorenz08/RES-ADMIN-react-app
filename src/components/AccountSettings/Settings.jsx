@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 const Settings = ({setActive}) => {
+    document.title = "Settings"
     useEffect(() => {
         setActive(()=> 'settings')
     }, [setActive]);

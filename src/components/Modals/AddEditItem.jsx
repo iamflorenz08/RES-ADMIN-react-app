@@ -15,9 +15,15 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
 
     const handleChange = (e) => {
         let value = e.target.value
-        if (e.target.name === 'current_supply') value = parseInt(value) || ''
-        else if (e.target.name === 'unit_cost') value = parseFloat(value) || ''
-        setStockDetails({ ...stockDetails, [e.target.name]: value })
+        let total_cost = 0
+        if (e.target.name === 'current_supply') value = parseInt(value) || 0
+        else if (e.target.name === 'unit_cost') value = parseFloat(value) || 0
+        if(stockDetails){
+            total_cost = stockDetails.current_supply * stockDetails.unit_cost
+        }
+        setStockDetails({ ...stockDetails, [e.target.name]: value, total_cost })
+
+        
     }
 
     const handleImageChange = (e) => {
@@ -314,7 +320,7 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                 <div
                                                     className="m-4 items-center justify-center p-4 text-center">
                                                     <h3 className="m-2 text-2xl">Total Cost</h3>
-                                                    <p className="text-3xl font-semibold">₱ 999,999.00</p>
+                                                    <p className="text-3xl font-semibold">₱ {stockDetails.current_supply * stockDetails.unit_cost }</p>
                                                 </div>
                                             </div>
                                         </div>
