@@ -1,12 +1,12 @@
 import AppLogo from '../images/smslogo.png'
+import Notification from './Notification/Notification'
 import { FaBell } from 'react-icons/fa'
-import { BsThreeDotsVertical, BsExclamationLg } from 'react-icons/bs'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 import { useState } from 'react'
 
 const Header = () => {
-
     const [notification, toggleNotification] = useState(false)
-
+    
     const logout = () => {
         sessionStorage.clear()
     }
@@ -21,27 +21,8 @@ const Header = () => {
 
             <div className='flex justify-center items-center gap-6'>
                 <div className='relative'>
-
                     <FaBell size={25} className={(notification && 'text-[#007BFF]') + ' cursor-pointer'} onClick={()=> toggleNotification(state=>!state)}/>
-
-                    {notification && (
-                        <div className='bg-white shadow-md w-[320px] h-[330px] absolute right-0 top-11 rounded-md flex flex-col'>
-                            <div className='p-[11px]'>
-                                <h1 className='font-bold text-[20px]'>Notification</h1>
-                            </div>
-                            <div className='overflow-auto'>
-                                <div className='h-[50px] bg-[#C9E0FE] flex items-center pr-[15px] cursor-pointer'>
-                                    <BsExclamationLg size={25} color='#FBAF35' className='mx-[15px]' />
-                                    <div>
-                                        <p className='text-[12px]'>Item_asdas_1231412 is running low!</p>
-                                        <p className='text-[#8F8F8F] text-[11px]'>1d ago</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-
+                    <Notification isShow={notification}/>
                 </div>
                 <div
                     className='cursor-pointer'>
