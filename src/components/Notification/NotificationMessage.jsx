@@ -1,5 +1,6 @@
 import {MdOutlineSyncProblem} from 'react-icons/md'
 const NotificationMessage = ({notification}) => {
+    
     return (
         <>
             <div className={(notification.isAdminRead ? 'bg-white' : 'bg-[#C9E0FE]') + ' h-[50px] flex items-center pr-[15px] cursor-pointer hover:bg-[#C9E0FE]'}>

@@ -10,6 +10,7 @@ const Header = () => {
     const logout = () => {
         sessionStorage.clear()
     }
+    
 
     return (
         <div className="sticky top-0 flex justify-between bg-white shadow-lg h-fit w-full p-[10px]">
