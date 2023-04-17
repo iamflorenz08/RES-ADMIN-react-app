@@ -109,7 +109,7 @@ const EditEmployee = ({ show, toggleModal, employee, setEmployeeInfo,save }) => 
                                                             className="mx-2 space-x-2 rounded-lg border-2 border-green-600 bg-white p-2 text-black ring-2 ring-transparent transition-all hover:shadow peer-checked:bg-green-600 peer-checked:text-white peer-checked:ring-green-600">
                                                             <p>
                                                                 <span className="font-bold">
-                                                                    Allowed
+                                                                    Allow
                                                                 </span>
                                                             </p>
                                                         </div>
@@ -124,7 +124,7 @@ const EditEmployee = ({ show, toggleModal, employee, setEmployeeInfo,save }) => 
                                                             className="mx-2 space-x-2 rounded-lg border-2 border-red-600 bg-white p-2 text-black ring-2 ring-transparent transition-all hover:shadow peer-checked:bg-red-600 peer-checked:text-white peer-checked:ring-red-600">
                                                             <p>
                                                                 <span className="font-bold">
-                                                                    NotAllowed
+                                                                    Don't Allow
                                                                 </span>
                                                             </p>
                                                         </div>
