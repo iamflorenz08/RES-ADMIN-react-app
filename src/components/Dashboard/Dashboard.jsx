@@ -1,15 +1,17 @@
 
 import { useState, useEffect } from "react";
-import { MdPendingActions } from 'react-icons/md'
-import { WiTime4 } from 'react-icons/wi'
-import { BsCheck2All } from 'react-icons/bs'
+// import { MdPendingActions } from 'react-icons/md'
+// import { WiTime4 } from 'react-icons/wi'
+// import { BsCheck2All } from 'react-icons/bs'
 import { Link } from "react-router-dom";
 import axios from "axios";
 import StocksTable from "./StocksTable";
 import RequisitionTable from "./RequisitionTable";
 import StockLogsTable from "./StockLogsTable";
 import Loading from "../Loading";
-
+import ic_to_be_approved from "../../images/ic_to_be_approved.png"
+import ic_for_pick_up from "../../images/ic_for_pick_up.png"
+import ic_completed from "../../images/ic_completed.png"
 
 const Dashboard = ({ setActive }) => {
     document.title = "Dashboard"
@@ -56,32 +58,35 @@ const Dashboard = ({ setActive }) => {
 
     return (
         <>
-            <Loading loading={loading}/>
+            <Loading loading={loading} />
 
             {requisitions && stocks && stockLogs && count && (
                 <div className="m-4 bg-blue-50">
                     <div className="flex justify-between gap-8 mb-4">
                         <div className="flex items-center justify-around w-full  bg-white py-10 shadow-md">
-                            <MdPendingActions size={100} className="text-[#FFB717]" />
+                            <img src={ic_to_be_approved} alt="icon" />
+                            {/* <MdPendingActions size={100} className="text-[#FFB717]" /> */}
                             <div className="text-center">
                                 <p className="text-6xl">{count && count.pendingCount}</p>
-                                <p className="text-xl text-gray-300">Pending Request</p>
+                                <p className="text-xl text-gray-300">To Be Approved</p>
                             </div>
                         </div>
 
                         <div className="flex items-center justify-around w-full  bg-white py-10 shadow-md">
-                            <WiTime4 size={110} className="text-[#006DEE]" />
+                            <img src={ic_for_pick_up} alt="icon" />
+                            {/* <WiTime4 size={110} className="text-[#006DEE]" /> */}
                             <div className="text-center">
                                 <p className="text-6xl">{count && count.ongoingCount}</p>
-                                <p className="text-xl text-gray-300">On Going Request</p>
+                                <p className="text-xl text-gray-300">Ready for Pick Up</p>
                             </div>
                         </div>
 
                         <div className="flex items-center justify-around w-full  bg-white py-10 shadow-md">
-                            <BsCheck2All size={110} className="text-[#32A05F]" />
+                            <img src={ic_completed} alt="icon" />
+                            {/* <BsCheck2All size={110} className="text-[#32A05F]" /> */}
                             <div className="text-center">
                                 <p className="text-6xl">{count && count.completedCount}</p>
-                                <p className="text-xl text-gray-300">Completed Request</p>
+                                <p className="text-xl text-gray-300">Completed</p>
                             </div>
                         </div>
                     </div>

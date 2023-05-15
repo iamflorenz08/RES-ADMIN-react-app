@@ -1,4 +1,12 @@
+import { useState } from 'react'
+import ic_replenish from '../../images/ic_replenish.png'
+import ReplenishModal from '../Modals/ReplenishModal'
 const StockTable = ({ stocks, toggleAddEditModal, toggleDeleteModal }) => {
+    const [supplyDetails, setSupplyDetails] = useState(null)
+
+    const handleReplenishClick = (stock) => {
+        setSupplyDetails(stock)
+    }
     return (
         <>
             <table className="w-full table-auto bg-blue-200 text-left text-blue-900">
@@ -104,13 +112,26 @@ const StockTable = ({ stocks, toggleAddEditModal, toggleDeleteModal }) => {
                             <td className="p-2">{stock.product_code}</td>
                             <td className="p-2">
                                 <div className="flex items-center gap-2">
-                                    <img alt="stock" className="w-6 h-6 object-contain" src={stock.photo_url}/>
+                                    <img alt="stock" className="w-6 h-6 object-contain" src={stock.photo_url} />
                                     {stock.item_name}
                                 </div>
                             </td>
-                            <td className="py-2 px-10">{stock.current_supply}</td>
+                            <td className="py-2 px-10">
+                                <div className="flex relative ">
+                                    <div className="flex">
+                                        {stock.current_supply}
+                                    </div>
+                                    <div className="flex items-center h-full absolute right-0">
+                                        <button
+                                            onClick={() => handleReplenishClick(stock)}
+                                        >
+                                            <img src={ic_replenish} alt='replenish' />
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
                             <td className="py-2 px-10">{stock.unit_measurement}</td>
-                            <td className="p-2">₱{stock.unit_cost}</td>
+                            <td className="p-2">₱ {(stock.unit_cost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                             <td className="py-2 px-5">{stock.item_type}</td>
                             <td className="p-2">{stock.category}</td>
                             <td className="p-2 text-center">
@@ -123,7 +144,7 @@ const StockTable = ({ stocks, toggleAddEditModal, toggleDeleteModal }) => {
                                 </button>
                                 {/* <!-- DELETE MODAL --> */}
                                 <button type="button"
-                                    onClick={()=> toggleDeleteModal(stock._id)}
+                                    onClick={() => toggleDeleteModal(stock._id)}
                                     className="rounded-full bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                                     Delete
                                 </button>
@@ -134,7 +155,7 @@ const StockTable = ({ stocks, toggleAddEditModal, toggleDeleteModal }) => {
                 </tbody>
             </table>
 
-
+            <ReplenishModal supply={supplyDetails} setToggle={setSupplyDetails} />
         </>
     )
 }

@@ -1,4 +1,4 @@
-import { Routes, Route,  useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/header";
@@ -36,7 +36,7 @@ function App() {
     }
 
     const redirect = (details) => {
-      if(details){
+      if (details) {
         if (details.adminType === 'custodian') {
           navigate('/dashboard')
         }
@@ -54,14 +54,12 @@ function App() {
     return <Login setToken={setToken} />
   }
 
-  
-
   return (
     <>
       <div className="flex">
         <Sidebar active={active} details={details} />
         <div className="block w-full bg-blue-50 relative">
-          <Header />
+          <Header setToken={setToken} details={details} />
           <Routes>
             <Route path="/dashboard" element={<Dashboard setActive={setActive} />} />
             <Route path="/requisition" element={<Requisition setActive={setActive} />} />

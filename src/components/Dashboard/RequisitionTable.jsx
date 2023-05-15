@@ -144,7 +144,7 @@ const RequisitionTable = ({ requisitions, setRefreshTable }) => {
                                 <button
                                     className="block rounded bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-900"
                                     type="button" onClick={() => toggleModal(requisition._id)}>
-                                    VIEW DETAILS
+                                    View Request
                                 </button>
                             </td>
                         </tr>

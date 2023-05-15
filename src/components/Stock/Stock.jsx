@@ -18,6 +18,7 @@ const Stock = ({ setActive }) => {
     const [loading, setLoading] = useState(false)
     const [refreshKey, setRefreshKey] = useState(0)
     const [stockDetails, setStockDetails] = useState({
+        item_code_type: "",
         item_type: "",
         product_code: "",
         photo_url: "",
@@ -28,7 +29,8 @@ const Stock = ({ setActive }) => {
         unit_measurement: "",
         source_of_fund: "",
         unit_cost: "",
-        desc: ""
+        desc: "",
+        buffer: ""
     })
     const [stockCount, setStockCount] = useState(0)
     const [rowStart, setRowStart] = useState(0)

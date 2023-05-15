@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import ReplenishModal from "../Modals/ReplenishModal";
 const StocksTable = ({ stocks }) => {
     const [sortedStock, setSortedStock] = useState([])
     const [sortItemName, setSortItemName] = useState(false)
     const [sortSupplies, setSortSupplies] = useState(false)
+    const [supplyDetails, setSupplyDetails] = useState(null)
 
     useEffect(() => {
         setSortedStock(stocks)
@@ -10,29 +12,33 @@ const StocksTable = ({ stocks }) => {
 
 
     const SortItemName = () => {
-        const asc = (a,b) => a.item_name.toUpperCase() < b.item_name.toUpperCase() ? 1 :-1
-        const desc = (a,b) => a.item_name.toUpperCase() > b.item_name.toUpperCase() ? 1 :-1
-        const sort = sortedStock ? sortedStock.sort((a,b)=>{
-            return sortItemName ? desc(a,b) : asc(a,b)
+        const asc = (a, b) => a.item_name.toUpperCase() < b.item_name.toUpperCase() ? 1 : -1
+        const desc = (a, b) => a.item_name.toUpperCase() > b.item_name.toUpperCase() ? 1 : -1
+        const sort = sortedStock ? sortedStock.sort((a, b) => {
+            return sortItemName ? desc(a, b) : asc(a, b)
         }) : []
         setSortedStock([...sort])
-        setSortItemName(type=> !type)   
+        setSortItemName(type => !type)
     }
 
     const SortSupplies = () => {
-        const asc = (a,b) => a.current_supply < b.current_supply ? 1 :-1
-        const desc = (a,b) => a.current_supply > b.current_supply ? 1 :-1
-        const sort = sortedStock ? sortedStock.sort((a,b)=>{
-            return sortSupplies ? desc(a,b) : asc(a,b)
+        const asc = (a, b) => a.current_supply < b.current_supply ? 1 : -1
+        const desc = (a, b) => a.current_supply > b.current_supply ? 1 : -1
+        const sort = sortedStock ? sortedStock.sort((a, b) => {
+            return sortSupplies ? desc(a, b) : asc(a, b)
         }) : []
         setSortedStock([...sort])
-        setSortSupplies(type=> !type)   
+        setSortSupplies(type => !type)
     }
 
-    
+    const HandleReplenishClick = (supply) => {
+        setSupplyDetails(supply)
+    }
     return (
         <>
-            <table className="w-full  text-blue-900 shadow-lg">
+
+
+            <table className="w-full  text-blue-900 shadow-lg ">
                 <thead>
                     <tr>
                         <th className="bg-blue-700  p-2 text-white">
@@ -50,7 +56,7 @@ const StocksTable = ({ stocks }) => {
                         </th>
                         <th className="bg-blue-700 p-2 text-white">
                             <div className="flex items-center justify-center">
-                                Current Supplies
+                                Available Supplies
                                 <button onClick={SortSupplies}>
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         className="ml-1 h-3 w-3" aria-hidden="true"
@@ -63,27 +69,35 @@ const StocksTable = ({ stocks }) => {
                         </th>
                         <th className="bg-blue-700 p-2 text-white">
                             <div className="flex items-center justify-center">
-                                Unit Of Measurement
+
                             </div>
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-red-600 h-72">
                     {sortedStock && sortedStock.map((stock, index) => (
                         <tr key={index} className={(index % 2 === 0 ? "bg-blue-100" : "bg-blue-200") + " text-blue-900"}>
                             <td className="p-2">
                                 <div className="flex items-center">
-                                    <img alt="stock" className="w-5 h-5 mr-5 object-contain" src={stock.photo_url}/>
+                                    <img alt="stock" className="w-5 h-5 mr-5 object-contain" src={stock.photo_url && stock.photo_url} />
                                     {stock.item_name}
                                 </div>
                             </td>
-                            <td className="py-2 text-center">{stock.current_supply}</td>
-                            <td className="p-2 text-center">{stock.unit_measurement}</td>
+                            <td className="py-2 text-center">{stock.current_supply - stock.buffer}/{stock.current_supply + stock.buffer}</td>
+                            <td className="p-2 flex justify-center">
+                                <button
+                                    onClick={() => HandleReplenishClick(stock)}
+                                    className="block rounded bg-green-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-900"
+                                    type="button">
+                                    Replenish
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
-            </table>
 
+            </table>
+            <ReplenishModal supply={supplyDetails} setToggle={setSupplyDetails} />
         </>
     )
 }

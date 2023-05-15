@@ -18,12 +18,15 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
         let total_cost = 0
         if (e.target.name === 'current_supply') value = parseInt(value) || 0
         else if (e.target.name === 'unit_cost') value = parseFloat(value) || 0
-        if(stockDetails){
+        if (stockDetails) {
             total_cost = stockDetails.current_supply * stockDetails.unit_cost
         }
         setStockDetails({ ...stockDetails, [e.target.name]: value, total_cost })
+    }
 
-        
+    const handleChangeUnitCost = (e) => {
+        const rawValue = e.target.value.replace(/[^0-9.]/g, '');
+        setStockDetails({ ...stockDetails, unit_cost: rawValue });
     }
 
     const handleImageChange = (e) => {
@@ -51,9 +54,10 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
 
     }
 
+    console.log(stockDetails)
+
     const addStock = async () => {
         for (let stockKey in stockDetails) {
-
             if (!stockDetails[stockKey]) {
                 showToast(false, "Stock details must not be empty.")
                 return
@@ -149,11 +153,13 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                 </div>
                                                 <div className="box col-start-1 row-start-2 row-end-2">
                                                     <div className="mt-1.5 flex items-center">
-                                                        <select id="propertyNum"
+                                                        <select id="item_code_type"
+                                                            name="item_code_type"
+                                                            value={stockDetails.item_code_type}
+                                                            onChange={handleChange}
                                                             className="block w-full rounded-l-lg border border-gray-300 bg-gray-50 p-2.5 text-sm font-semibold text-black placeholder-transparent focus:border-black focus:ring-black">
-                                                            <option value="">Property No.
-                                                            </option>
-                                                            <option value="">Stock No.</option>
+                                                            <option value="PropertyNo">Property No.</option>
+                                                            <option value="StockNo">Stock No.</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -174,7 +180,7 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                             Item Name </label>
                                                         <input type="name" name="item_name" id="item_name"
                                                             className="w-100 my-1 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                                            placeholder="Alcohol" required
+                                                            placeholder="Ex. Alcohol" required
                                                             value={stockDetails.item_name}
                                                             onChange={handleChange} />
                                                     </div>
@@ -213,6 +219,7 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                             <option value="School Supplies">School Supplies</option>
                                                             <option value="Project Free">Project Free</option>
                                                             <option value="Equipment">Equipment</option>
+                                                            <option value="Building Maintenance Materials">Building Maintenance Materials</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -221,36 +228,70 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                     <div>
                                                         <label htmlFor="current_supply"
                                                             className="my-1 block text-sm font-medium text-gray-900">
-                                                            Current Supply </label>
+                                                            Quantity </label>
                                                         <input type="number" id="current_supply"
                                                             name="current_supply"
                                                             value={stockDetails.current_supply}
                                                             onChange={handleChange}
                                                             className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                                            placeholder="40" required />
+                                                            placeholder="0" required />
                                                     </div>
                                                 </div>
+
                                                 <div
                                                     className="box col-start-2 col-end-2 row-start-5 row-end-5">
-                                                    <div>
-                                                        <label htmlFor="unit_measurement"
-                                                            className="my-1 block text-sm font-medium text-gray-900">
-                                                            Unit of Measurement </label>
-                                                        <select id="unit_measurement"
-                                                            name="unit_measurement"
-                                                            onChange={handleChange}
-                                                            value={stockDetails.unit_measurement}
-                                                            className="my-1 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-                                                            <option value="">Select</option>
-                                                            <option value="Gallon">Gallon</option>
-                                                            <option value="Can">Can</option>
-                                                            <option value="Box">Box</option>
-                                                            <option value="Per piece">Per piece</option>
-                                                        </select>
-                                                    </div>
+
+                                                    <label htmlFor="buffer"
+                                                        className="my-1 block text-sm font-medium text-gray-900">
+                                                        Buffer </label>
+                                                    <input type="number" id="buffer"
+                                                        name="buffer"
+                                                        value={stockDetails.buffer}
+                                                        onChange={handleChange}
+                                                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                                                        placeholder="0" required />
+
+
                                                 </div>
                                                 <div
                                                     className="box col-start-1 col-end-1 row-start-6 row-end-6 mr-2">
+                                                    <div>
+                                                        <div>
+                                                            <label htmlFor="unit_measurement"
+                                                                className="my-1 block text-sm font-medium text-gray-900">
+                                                                Unit of Measurement </label>
+                                                            <select id="unit_measurement"
+                                                                name="unit_measurement"
+                                                                onChange={handleChange}
+                                                                value={stockDetails.unit_measurement}
+                                                                className="my-1 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                                                                <option value="">Select</option>
+                                                                <option value="Gallon">bottle</option>
+                                                                <option value="Can">gallon</option>
+                                                                <option value="Box">piece</option>
+                                                                <option value="pack">pack</option>
+                                                                <option value="unit">unit</option>
+                                                                <option value="can">can</option>
+                                                                <option value="pouch">pouch</option>
+                                                                <option value="bundle">bundle</option>
+                                                                <option value="box">box</option>
+                                                                <option value="roll">roll</option>
+                                                                <option value="jar">jar</option>
+                                                                <option value="tube">tube</option>
+                                                                <option value="set">set</option>
+                                                                <option value="pair">pair</option>
+                                                                <option value="pad">pad</option>
+                                                                <option value="ream">ream</option>
+                                                                <option value="book">book</option>
+                                                                <option value="cart">cart</option>
+                                                                <option value="license">license</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className="box col-start-2 col-end-2 row-start-6 row-end-6">
                                                     <div>
                                                         <label htmlFor="source_of_fund"
                                                             className="my-1 block text-sm font-medium text-gray-900">
@@ -265,12 +306,7 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                             <option value="National Fund">National Fund</option>
                                                             <option value="Local Fund">Local Fund</option>
                                                         </select>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    className="box col-start-2 col-end-2 row-start-6 row-end-6">
-                                                    <div>
-                                                        <label htmlFor="unit_cost"
+                                                        {/* <label htmlFor="unit_cost"
                                                             className="my-1 block text-sm font-medium text-gray-900">
                                                             Unit Cost </label>
                                                         <input type="number" id="unit_cost"
@@ -278,8 +314,12 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                             onChange={handleChange}
                                                             value={stockDetails.unit_cost}
                                                             className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                                            placeholder="999,999.00" required />
+                                                            placeholder="999,999.00" required /> */}
                                                     </div>
+                                                </div>
+                                                <div className="flex py-4">
+                                                    <h3 className="font-bold mr-2">Total Cost:</h3>
+                                                    <p>₱ {(stockDetails.current_supply * stockDetails.unit_cost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                                 </div>
                                                 <div
                                                     className="box row-start-10 row-end-10 col-span-2 col-start-1">
@@ -293,7 +333,7 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                             name="desc"
                                                             className="m-0 block w-full rounded border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-gray-700 transition ease-in-out focus:border-black focus:bg-white focus:text-gray-700 focus:outline-none"
                                                             id="desc" rows="3"
-                                                            placeholder="Alcohol"></textarea>
+                                                            placeholder="250 Characters..."></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -318,12 +358,17 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
                                                     </div>
                                                 </div>
                                                 <div
-                                                    className="m-4 items-center justify-center p-4 text-center">
-                                                    <h3 className="m-2 text-2xl">Total Cost</h3>
-                                                    <p className="text-3xl font-semibold">₱ {stockDetails.current_supply * stockDetails.unit_cost }</p>
+                                                    className="m-4 flex flex-col items-center justify-center p-4 text-center">
+                                                    <h3 className="text-lg font-semibold">Unit Cost</h3>
+                                                    <input
+                                                        className='text-center text-3xl font-semibold p-0 outline-none border-none active:outline-none'
+                                                        type="text"
+                                                        onChange={handleChangeUnitCost}
+                                                        value={"₱ " + (stockDetails.unit_cost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} />
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </form>
                             </div>

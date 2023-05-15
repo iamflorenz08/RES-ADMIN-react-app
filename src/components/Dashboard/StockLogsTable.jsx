@@ -86,7 +86,7 @@ const StockLogsTable = ({ stockLogs }) => {
                         </th>
                     </tr>
                 </thead>
-                <tbody className="tex-left">
+                <tbody className="tex-left h-72">
                     {sortedStockLogs && sortedStockLogs.map((log, index) => {
                         let user = null
                         let full_name = null
@@ -103,9 +103,9 @@ const StockLogsTable = ({ stockLogs }) => {
                                 <td className="p-2">
                                     <div className="flex items-center">
                                         <div>
-                                            <img alt="stock" className="w-5 h-5 mr-5 object-contain" src={log.requestItem.photo_url} />
+                                            <img alt="stock" className="w-5 h-5 mr-5 object-contain" src={log.requestItem && log.requestItem.photo_url} />
                                         </div>
-                                        <div>{log.requestItem.item_name}</div>
+                                        <div>{log.requestItem && log.requestItem.item_name}</div>
                                     </div>
                                 </td>
                                 <td className="py-2 pl-12 text-left">{log.itemQuantity}</td>

@@ -185,7 +185,7 @@ const RequisitionTable = ({ requisitions, toggleModal }) => {
                                                 Approved</span>)
                                         }
                                         else if (requisition.status === 'On going') {
-                                            return (<span className="rounded-md bg-green-400 px-2 text-gray-50">Ongoing</span>)
+                                            return (<span className="rounded-md bg-green-400 px-2 text-gray-50">Ready For Pick up</span>)
                                         }
                                     })()}
                                 </td>

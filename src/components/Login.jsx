@@ -57,7 +57,7 @@ const Login = ({setToken}) => {
                     {/* <!-- login form --> */}
                     <div className="h-[620px] w-[550px] bg-white">
                         <form onSubmit={handleLogin} className="mx-28 mt-20">
-                            <h1 className="mb-20 text-left text-5xl font-bold select-none">Sign In</h1>
+                            <h1 className="mb-20 text-left text-5xl font-bold select-none">Log in to your account</h1>
                             <div className="space-y-10">
                                 <div className="flex border-b border-black">
                                     <div className="mr-4">
