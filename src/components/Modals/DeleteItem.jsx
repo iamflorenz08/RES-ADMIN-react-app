@@ -1,9 +1,9 @@
 import React from 'react'
 
-const DeleteItem = ({ show, toggleModal, deleteStock, setRefreshKey}) => {
-    const deleteItem = () =>{
+const DeleteItem = ({ show, toggleModal, deleteStock, setRefreshKey }) => {
+    const deleteItem = () => {
         deleteStock()
-        setRefreshKey(key=>key+1)
+        setRefreshKey(key => key + 1)
         toggleModal()
     }
     return (
@@ -32,6 +32,7 @@ const DeleteItem = ({ show, toggleModal, deleteStock, setRefreshKey}) => {
                                     Yes, I'm sure
                                 </button>
                                 <button type="button"
+                                    onClick={toggleModal}
                                     className="bg-red-700 rounded-lg border border-red-200 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-600 hover:text-white focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-200 dark:border-red-500 dark:bg-red-700 dark:text-white dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-600">
                                     No, cancel
                                 </button>

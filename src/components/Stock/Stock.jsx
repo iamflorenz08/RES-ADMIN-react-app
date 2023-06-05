@@ -43,9 +43,9 @@ const Stock = ({ setActive }) => {
         const loadTable = async () => {
             setLoading(true)
             const item_type = filterType && filterType.item_type && '&item_type=' + filterType.item_type
-            const category =  filterType && filterType.category && '&category=' + filterType.category 
-            const sort_by =   filterType && filterType.sort_by && '&sort_by=' + filterType.sort_by 
-            const search =   filterType && filterType.search && '&search=' + filterType.search 
+            const category = filterType && filterType.category && '&category=' + filterType.category
+            const sort_by = filterType && filterType.sort_by && '&sort_by=' + filterType.sort_by
+            const search = filterType && filterType.search && '&search=' + filterType.search
             const stocks = await axios.get(`${baseURL}/supply/details/${page}/${row_limit}?${item_type || ''}${category || ''}${sort_by || ''}${search || ''}`)
             const stock_count = await axios.get(`${baseURL}/supply/count?${item_type || ''}${category || ''}${sort_by || ''}${search || ''}`)
             const pageLimit = Math.ceil(stock_count.data.stock_count / row_limit)
@@ -59,7 +59,7 @@ const Stock = ({ setActive }) => {
             setLoading(false)
         }
         loadTable()
-    }, [page, baseURL, refreshKey,filterType]);
+    }, [page, baseURL, refreshKey, filterType]);
 
     useEffect(() => {
         setActive(() => 'stock')
@@ -96,9 +96,9 @@ const Stock = ({ setActive }) => {
     }
 
     const deleteStock = async () => {
-        await axios.post(`${baseURL}/supply/delete?id=${deleteId}`)
+        await axios.delete(`${baseURL}/supply?id=${deleteId}`)
     }
-    
+
     const showToast = (isSuccess, message) => {
         if (isSuccess) {
             toast.success(message)
@@ -120,7 +120,7 @@ const Stock = ({ setActive }) => {
 
     const search = (e) => {
         e.preventDefault()
-        setFilterType(state => ({...state, search: e.target[0].value}))
+        setFilterType(state => ({ ...state, search: e.target[0].value }))
     }
     return (
         <>
@@ -176,15 +176,15 @@ const Stock = ({ setActive }) => {
 
                             {/* <!-- stocks table--> */}
                             <div className="mx-4">
-                                <StockTable stocks={stocks} toggleAddEditModal={EditItem} toggleDeleteModal={toggleDeleteModal} />  
+                                <StockTable stocks={stocks} toggleAddEditModal={EditItem} toggleDeleteModal={toggleDeleteModal} />
                                 {/*<!-- add edit items --> */}
                                 <AddEditItem
                                     show={addEditModal}
                                     toggleModal={() => setAddEditModal(false)}
                                     stock={stockDetails}
                                     setStockDetails={setStockDetails}
-                                    setRefreshKey={setRefreshKey} 
-                                    showToast={showToast}/>
+                                    setRefreshKey={setRefreshKey}
+                                    showToast={showToast} />
                                 {/* <!-- add edit end -->
 
                             <!-- delete item modal --> */}

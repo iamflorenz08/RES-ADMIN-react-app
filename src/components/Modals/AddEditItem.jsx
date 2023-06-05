@@ -54,8 +54,6 @@ const AddEditItem = ({ show, toggleModal, stock, setRefreshKey, showToast }) => 
 
     }
 
-    console.log(stockDetails)
-
     const addStock = async () => {
         for (let stockKey in stockDetails) {
             if (!stockDetails[stockKey]) {

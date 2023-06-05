@@ -1,10 +1,14 @@
-const EmployeeTable = ({ employees, toggleModal }) => {
-    const convertDate = (dateString) =>{
+import { useState } from "react"
+import DeleteEmployeeModal from "../Modals/DeleteEmployeeModal"
+
+const EmployeeTable = ({ employees, toggleModal, setRefreshKey }) => {
+    const [employeeId, setEmployeeId] = useState(null)
+
+    const convertDate = (dateString) => {
         const date = new Date(dateString)
         return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
     }
 
-    
     return (
         <>
             {employees.map((employee, index) => (
@@ -48,13 +52,16 @@ const EmployeeTable = ({ employees, toggleModal }) => {
                             Edit
                         </button>
                         {/* <!-- DELETE btn --> */}
-                        <button type="button" data-modal-toggle="employ-del"
+                        <button type="button"
+                            onClick={() => setEmployeeId(employee._id)}
                             className="mr-2 mb-2 rounded-full bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             Delete
                         </button>
                     </td>
                 </tr>
             ))}
+
+            <DeleteEmployeeModal isToggle={employeeId} setToggle={setEmployeeId} setRefreshKey={setRefreshKey} user_id={employeeId} />
         </>
     )
 }

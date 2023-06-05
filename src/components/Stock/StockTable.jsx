@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import ic_replenish from '../../images/ic_replenish.png'
 import ReplenishModal from '../Modals/ReplenishModal'
+import { isCritical } from '../../utils/SupplyCritical'
+import { BsExclamationLg } from 'react-icons/bs'
 const StockTable = ({ stocks, toggleAddEditModal, toggleDeleteModal }) => {
     const [supplyDetails, setSupplyDetails] = useState(null)
 
@@ -40,7 +42,7 @@ const StockTable = ({ stocks, toggleAddEditModal, toggleDeleteModal }) => {
                         </th>
                         <th className="bg-blue-700 p-2 text-white">
                             <div className="flex items-center">
-                                Current Supplies
+                                Available Supplies
                                 <a href="/">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         className="ml-1 h-3 w-3" aria-hidden="true" fill="currentColor"
@@ -117,16 +119,24 @@ const StockTable = ({ stocks, toggleAddEditModal, toggleDeleteModal }) => {
                                 </div>
                             </td>
                             <td className="py-2 px-10">
-                                <div className="flex relative ">
-                                    <div className="flex">
-                                        {stock.current_supply}
+                                <div className="flex relative">
+                                    <div className={(isCritical(stock.current_supply, stock.buffer) && 'text-[#FF0000]') + " flex"}>
+                                        {(stock.current_supply - stock.buffer) >= 0 ? (stock.current_supply - stock.buffer) : 0}
                                     </div>
                                     <div className="flex items-center h-full absolute right-0">
-                                        <button
-                                            onClick={() => handleReplenishClick(stock)}
-                                        >
-                                            <img src={ic_replenish} alt='replenish' />
-                                        </button>
+                                        <div className='relative'>
+                                            {isCritical(stock.current_supply, stock.buffer) && (
+                                                <div className='absolute -top-1 -right-1 bg-[#FF0000] text-white rounded-full p-0.5'>
+                                                    <BsExclamationLg size={10} />
+                                                </div>
+                                            )}
+
+                                            <button
+                                                onClick={() => handleReplenishClick(stock)}
+                                            >
+                                                <img src={ic_replenish} alt='replenish' />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -153,7 +163,7 @@ const StockTable = ({ stocks, toggleAddEditModal, toggleDeleteModal }) => {
                     ))}
 
                 </tbody>
-            </table>
+            </table >
 
             <ReplenishModal supply={supplyDetails} setToggle={setSupplyDetails} />
         </>

@@ -16,6 +16,7 @@ const AddRequestModal = ({ show, toggleModal, showToast }) => {
                 quantity: '',
                 unit_measurement: '',
                 total_cost: '',
+                buffer: ''
             }
         ])
 
@@ -33,7 +34,6 @@ const AddRequestModal = ({ show, toggleModal, showToast }) => {
             const item_lists = await axios.get(`${baseURL}/supply/details`)
             setItemLists(item_lists.data)
         }
-
         loadItemLists()
     }, [baseURL]);
 
@@ -47,6 +47,7 @@ const AddRequestModal = ({ show, toggleModal, showToast }) => {
             quantity: '',
             unit_measurement: '',
             total_cost: '',
+            buffer: ''
         }])
     }
 
@@ -69,7 +70,8 @@ const AddRequestModal = ({ show, toggleModal, showToast }) => {
                     quantity: '',
                     unit_measurement: 'N/A',
                     total_cost: '',
-                    current_supply: 0
+                    current_supply: 0,
+                    buffer: 0
                 }
             }
 
@@ -82,7 +84,8 @@ const AddRequestModal = ({ show, toggleModal, showToast }) => {
                     product_code: item_info.product_code || '',
                     unit_measurement: item_info.unit_measurement || '',
                     total_cost: item_info.unit_cost * obj.quantity,
-                    current_supply: item_info.current_supply
+                    current_supply: item_info.current_supply,
+                    buffer: item_info.buffer
                 }
             }
 
@@ -139,7 +142,7 @@ const AddRequestModal = ({ show, toggleModal, showToast }) => {
                 }
             }
 
-            if(parseInt(request.quantity)>request.current_supply){
+            if (parseInt(request.quantity) > request.current_supply) {
                 showToast(false, "Not enough supply")
                 return
             }
@@ -302,7 +305,7 @@ const AddRequestModal = ({ show, toggleModal, showToast }) => {
                                                                 className="mr-1 block w-14 text-center rounded-lg border border-gray-300 bg-gray-50 px-1 text-sm text-gray-900"
                                                                 placeholder="0" required />
                                                             <p className={(request.quantity > request.current_supply ? 'text-red-600' : 'text-green-600')}>
-                                                                / {request.current_supply || 0}
+                                                                / {request.current_supply}
                                                             </p>
                                                         </td>
                                                         <td className="p-1 text-center">{request.unit_measurement || 'N/A'}</td>

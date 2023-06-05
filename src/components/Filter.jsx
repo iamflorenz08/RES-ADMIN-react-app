@@ -25,7 +25,7 @@ const Filter = ({ filterType, setFilterType, type }) => {
                 </button>
 
                 {filter && (
-                    <div className="absolute bg-white p-8 flex gap-8 top-9 shadow-lg h-52 rounded-lg" onBlur={() => toggleFilter(false)}>
+                    <div className="absolute bg-white p-8 flex gap-8 top-9 shadow-lg h-52 rounded-lg z-50" onBlur={() => toggleFilter(false)}>
                         {type === 'requisition' && (
                             <>
                                 <div className="w-32">
@@ -266,7 +266,7 @@ const Filter = ({ filterType, setFilterType, type }) => {
                                                 className={
                                                     (filterType && filterType.sort_by === 'current_supply'
                                                         && 'text-blue-600') + " hover:text-blue-600"
-                                                }>Current Supply</button>
+                                                }>Available Supplies</button>
 
                                             {filterType && filterType.sort_by === 'current_supply' && (
                                                 <RiCloseFill

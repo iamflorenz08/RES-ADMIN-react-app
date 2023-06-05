@@ -45,9 +45,9 @@ const Employees = ({ setActive }) => {
         setEditModal(true)
     }
 
-    const save = async(id) => {
+    const save = async (id) => {
         await axios.post(`${baseURL}/user/edit`, employeeInfo)
-        setRefreshKey(key=> key + 1)
+        setRefreshKey(key => key + 1)
         setEditModal(false)
     }
 
@@ -79,7 +79,7 @@ const Employees = ({ setActive }) => {
 
                                         <h2 className="font-bold">Employees</h2>
                                     </div>
-                                    <form  className="ml-10 flex items-center">
+                                    <form className="ml-10 flex items-center">
                                         <label htmlFor="default-search"
                                             className="sr-only text-sm font-medium text-gray-900">Search</label>
                                         <input
@@ -176,7 +176,7 @@ const Employees = ({ setActive }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <EmployeeTable employees={employees} toggleModal={EditModal} />
+                                            <EmployeeTable employees={employees} toggleModal={EditModal} setRefreshKey={setRefreshKey} />
                                         </tbody>
                                     </table>
 
@@ -187,8 +187,8 @@ const Employees = ({ setActive }) => {
                                         show={editModal}
                                         toggleModal={() => setEditModal(false)}
                                         employee={employeeInfo}
-                                        setEmployeeInfo={setEmployeeInfo} 
-                                        save={save}/>
+                                        setEmployeeInfo={setEmployeeInfo}
+                                        save={save} />
                                     {/* <!-- modal end -->
 
                                     <!-- Delete modal --> */}

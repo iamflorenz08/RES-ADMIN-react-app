@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import ReplenishModal from "../Modals/ReplenishModal";
+import { BsExclamationLg } from 'react-icons/bs'
+import { isCritical } from "../../utils/SupplyCritical";
 const StocksTable = ({ stocks }) => {
     const [sortedStock, setSortedStock] = useState([])
     const [sortItemName, setSortItemName] = useState(false)
@@ -34,10 +36,11 @@ const StocksTable = ({ stocks }) => {
     const HandleReplenishClick = (supply) => {
         setSupplyDetails(supply)
     }
+
+  
+
     return (
         <>
-
-
             <table className="w-full  text-blue-900 shadow-lg ">
                 <thead>
                     <tr>
@@ -83,14 +86,19 @@ const StocksTable = ({ stocks }) => {
                                     {stock.item_name}
                                 </div>
                             </td>
-                            <td className="py-2 text-center">{stock.current_supply - stock.buffer}/{stock.current_supply + stock.buffer}</td>
+                            <td className={(isCritical(stock.current_supply, stock.buffer) && 'text-[#FF0000]') + " py-2 text-center"}>{(stock.current_supply - stock.buffer) >= 0 ? (stock.current_supply - stock.buffer) : 0}</td>
                             <td className="p-2 flex justify-center">
-                                <button
-                                    onClick={() => HandleReplenishClick(stock)}
-                                    className="block rounded bg-green-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-900"
-                                    type="button">
-                                    Replenish
-                                </button>
+                                <div className="relative">
+                                    {isCritical(stock.current_supply, stock.buffer) && (
+                                        <div className="absolute -right-1 -top-2 bg-[#FF0000] rounded-full text-white p-0.5"><BsExclamationLg size={10} /></div>
+                                    )}
+                                    <button
+                                        onClick={() => HandleReplenishClick(stock)}
+                                        className="block rounded bg-green-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-900"
+                                        type="button">
+                                        Replenish
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}
